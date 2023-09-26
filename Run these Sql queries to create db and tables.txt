@@ -1,0 +1,32 @@
+CREATE DATABASE `bankapplicationdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+CREATE TABLE `admin` (
+  `admin_id` varchar(20) NOT NULL,
+  `admin_pwd` varchar(10) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `customers` (
+  `customerId` varchar(20) NOT NULL,
+  `customerName` varchar(20) NOT NULL,
+  `accountNo` int NOT NULL,
+  `customerPassword` varchar(10) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `balance` int NOT NULL,
+  `bankName` varchar(30) NOT NULL,
+  `ifscCode` varchar(15) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `status` enum('active','inactive') DEFAULT NULL,
+  PRIMARY KEY (`customerId`),
+  UNIQUE KEY `accountNo_UNIQUE` (`accountNo`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `customerId_UNIQUE` (`customerId`),
+  CONSTRAINT `customers_chk_1` CHECK ((`customerPassword` <> _utf8mb4''))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `statements` (
+  `sender_accountNo` int NOT NULL,
+  `recipient_accountNo` int NOT NULL,
+  `transcation_time` timestamp NOT NULL,
+  `amount` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

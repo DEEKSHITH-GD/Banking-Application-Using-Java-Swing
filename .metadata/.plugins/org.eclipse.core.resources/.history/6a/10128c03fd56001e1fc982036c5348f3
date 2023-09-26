@@ -1,0 +1,17 @@
+package com.destination.BankingAppFrames;
+
+import javax.swing.JFrame;
+
+public class LoginSuccessful extends JFrame  
+	{ 
+
+		//constructor  
+		RegistrationSuccessfull()  
+		{  
+			setDefaultCloseOperation(javax.swing.  
+					WindowConstants.DISPOSE_ON_CLOSE);  
+			setTitle("Registration Successfull");  
+			setSize(400, 200);  
+		}  
+	}  
+}

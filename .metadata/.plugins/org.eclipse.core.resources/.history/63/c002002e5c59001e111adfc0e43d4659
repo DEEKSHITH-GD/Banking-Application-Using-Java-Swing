@@ -1,0 +1,72 @@
+package com.destination.BankingAppFrames;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.destination.BankingApplication.BankingApplication;
+import com.destination.BankingApplication.Connector;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class UserLoginSuccessJFrame extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserLoginSuccessJFrame frame = new UserLoginSuccessJFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public UserLoginSuccessJFrame() {
+		setTitle("LOGIN SUCCESSFULL");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 483, 160);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Login Successfull for: "+BankingApplication.getCustomerId());
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNewLabel.setBounds(34, 39, 408, 31);
+		contentPane.add(lblNewLabel);
+	}
+	public void getCustomerName() {
+		try {
+			Statement stmt = Connector.Connector().createStatement();
+			ResultSet rs = stmt.executeQuery("Select customerName from customers");
+			ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+			while (rs.next()) {
+				BankingApplication.setCustomerName(rs.getString(2));
+				System.out.println(BankingApplication.getCustomerName());
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

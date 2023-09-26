@@ -1,0 +1,1 @@
+Change the MySQL password in the /BankingApplication/src/main/resources/MySqlCredentials.properties

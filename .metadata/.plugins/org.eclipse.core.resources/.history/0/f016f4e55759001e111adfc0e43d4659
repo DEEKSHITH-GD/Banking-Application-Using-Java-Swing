@@ -1,0 +1,80 @@
+package com.destination.BankingAppFrames;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class UserLoginJFrame extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField1;
+	private JTextField textField2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserLoginJFrame frame = new UserLoginJFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public UserLoginJFrame() {
+		setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		setTitle("CUSTOMER LOGIN FORM");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 255);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Customer ID");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNewLabel.setBounds(94, 51, 89, 27);
+		contentPane.add(lblNewLabel);
+		
+		textField1 = new JTextField();
+		textField.setBounds(181, 52, 145, 27);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblCustomerPassword = new JLabel("Password");
+		lblCustomerPassword.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblCustomerPassword.setBounds(94, 92, 89, 27);
+		contentPane.add(lblCustomerPassword);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(181, 93, 145, 27);
+		contentPane.add(textField_1);
+		
+		JButton btnNewButton = new JButton("Login");
+		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(155, 148, 117, 33);
+		contentPane.add(btnNewButton);
+	}
+}

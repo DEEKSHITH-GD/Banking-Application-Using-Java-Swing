@@ -1,0 +1,35 @@
+package com.destination.BankingAppFrames;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.destination.BankingApplication.BankingApplication;
+
+public class UserLoginFailed_Invalid extends JFrame {
+
+	private JPanel contentPane;
+	/**
+	 * Create the frame.
+	 */
+	public UserLoginFailed_Invalid() {
+		setTitle("LOGIN FAILED");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 402, 160);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel LFICLabel = new JLabel("Login Failed: Invalid Credentials");
+		LFICLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		LFICLabel.setBounds(89, 41, 186, 31);
+		contentPane.add(LFICLabel);
+	}
+
+}

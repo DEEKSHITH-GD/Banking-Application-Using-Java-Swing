@@ -1,0 +1,163 @@
+package com.destination.BankingAppFrames;
+
+import java.awt.EventQueue;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+import com.destination.BankingApplication.BankingApplication;
+import com.destination.BankingApplication.Connector;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+import javax.swing.JToggleButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.PublicKey;
+
+public class ActivateCustomer extends JFrame {
+
+	private JPanel contentPane;
+	private JTable table;
+	private DefaultTableModel model;
+	private String status;
+	JButton btnActivate;
+	JButton btnDeactivate;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ActivateCustomer frame = new ActivateCustomer();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ActivateCustomer() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 732, 439);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 56, 694, 287);
+		contentPane.add(scrollPane);
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setSurrendersFocusOnKeystroke(true);
+		table.setFillsViewportHeight(true);
+		table.setCellSelectionEnabled(true);
+		table.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+						"Customer ID", "Customer Name", "Account No", "Customer Password", "Balance", "Bank Name", "IFSC Code", "E-mail", "Status"
+				}
+				));
+		model = (DefaultTableModel) table.getModel();
+		try {
+			Statement stmt = Connector.Connector().createStatement();
+			ResultSet rs = stmt.executeQuery("Select * from customers");
+			ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+			while (rs.next()) {
+				BankingApplication.setCustomerId(rs.getString(1));
+				BankingApplication.setCustomerName(rs.getString(2));
+				BankingApplication.setAccountNo(rs.getInt(3));
+				BankingApplication.setCustomerPassword(rs.getString(4));
+				BankingApplication.setBalance(rs.getInt(5));
+				BankingApplication.setBankName(rs.getString(6));
+				BankingApplication.setIfscCode(rs.getString(7));
+				BankingApplication.setEmail(rs.getString(8));
+				status = rs.getString(9);
+				String[] rows = {BankingApplication.getCustomerId(), BankingApplication.getCustomerName(), Integer.toString(BankingApplication.getAccountNo()), 
+						BankingApplication.getCustomerPassword(), Integer.toString(BankingApplication.getBalance()), BankingApplication.getBankName(),
+						BankingApplication.getIfscCode(), BankingApplication.getEmail(), status};
+				model.addRow(rows);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		JLabel lblNewJgoodiesTitle = DefaultComponentFactory.getInstance().createTitle("Registered Customers");
+		lblNewJgoodiesTitle.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewJgoodiesTitle.setLabelFor(contentPane);
+		lblNewJgoodiesTitle.setBounds(281, 11, 166, 34);
+		contentPane.add(lblNewJgoodiesTitle);
+
+		btnActivate = new JButton("Activate");
+		btnActivate.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnActivate.setBounds(170, 354, 122, 35);
+		contentPane.add(btnActivate);
+
+		btnDeactivate = new JButton("Deactivate");
+		btnDeactivate.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnDeactivate.setBounds(390, 354, 122, 35);
+		contentPane.add(btnDeactivate);
+
+		btnActivate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent aae) {
+				int index = table.getSelectedRow();
+				Object ValueOfCell = model.getValueAt(index, 0);
+				try {
+					PreparedStatement pst = Connector.Connector().prepareStatement("Update customers set status = \"active\" where customerId=? and status =\"inactive\"");
+					pst.setString(1, (String) ValueOfCell);
+					int result = pst.executeUpdate();
+					if(result > 0) {
+						JOptionPane.showMessageDialog(btnActivate, ValueOfCell+" is Activated");
+						//System.out.println(ValueOfCell);
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnDeactivate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent aae) {
+				int index = table.getSelectedRow();
+				Object ValueOfCell = model.getValueAt(index, 0);
+				//System.out.println(ValueOfCell);
+				try {
+					PreparedStatement pst = Connector.Connector().prepareStatement("Update customers set status = \"inactive\" where customerId=? and status =\"active\"");
+					pst.setString(1, (String) ValueOfCell);
+					int result = pst.executeUpdate();
+					if(result > 0) {
+						JOptionPane.showMessageDialog(btnActivate, ValueOfCell+" is Deactivated");
+						//System.out.println(ValueOfCell);
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+}

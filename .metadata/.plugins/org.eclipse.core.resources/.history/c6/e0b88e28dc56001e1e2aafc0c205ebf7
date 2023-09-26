@@ -1,0 +1,162 @@
+package com.destination.BankingAppFrames;
+//import required classes and packages  
+import javax.swing.*;
+
+import com.destination.BankingApplication.BankingApplication;
+
+import java.awt.*;  
+import java.awt.event.*;  
+import java.lang.Exception;  
+
+//create CreateLoginForm class to create login form  
+//class extends JFrame to create a window where our component add  
+//class implements ActionListener to perform an action on button click  
+class RegisterJFrame extends JFrame implements ActionListener  
+{ 
+
+	//initialize button, panel, label, and text field  
+	JButton button1;  
+	JPanel newPanel;  
+	JLabel customerIdLabel, customerNameLabel, accountNoLabel, customerPasswordLabel, balanceLabel, bankNameLabel, ifscCodeLabel, emailLabel ;  
+	final JTextField  textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8 ;  
+
+	//calling constructor  
+	RegisterJFrame()  
+	{     
+
+		//create label for customerId   
+		customerIdLabel = new JLabel();  
+		customerIdLabel.setText("Customer ID");      //set label value for textField1  
+
+		//create text field to get customerId from the user  
+		textField1 = new JTextField(20);    //set length of the text  
+
+		//create label for customerName   
+		customerNameLabel = new JLabel();  
+		customerNameLabel.setText("Customer Name");      //set label value for textField2  
+
+		//create text field to get customerName from the user  
+		textField2 = new JTextField(20);    //set length of the text
+
+		//create label for accountNo   
+		accountNoLabel = new JLabel();  
+		accountNoLabel.setText("Account No");      //set label value for textField3  
+
+		//create text field to get accountNo from the user  
+		textField3 = new JTextField(20);    //set length of the text
+
+		//create label for password  
+		customerPasswordLabel = new JLabel();  
+		customerPasswordLabel.setText("Password");      //set label value for textField4  
+
+		//create text field to get password from the user  
+		textField4 = new JPasswordField(10);    //set length for the password
+
+		//create label for balance  
+		balanceLabel = new JLabel();  
+		balanceLabel.setText("Deposit Amount");      //set label value for textField5  
+
+		//create text field to get balance from the user  
+		textField5 = new JPasswordField(20);    //set length for the password
+
+		//create label for bankName  
+		bankNameLabel = new JLabel();  
+		bankNameLabel.setText("Bank Name");      //set label value for textField6  
+
+		//create text field to get bankName from the user  
+		textField6 = new JPasswordField(20);    //set length for the password
+
+		//create label for ifscCode  
+		ifscCodeLabel = new JLabel();  
+		ifscCodeLabel.setText("IFSC Code");      //set label value for textField7  
+
+		//create text field to get ifscCode from the user  
+		textField7 = new JPasswordField(10);    //set length for the password
+
+		//create label for email  
+		emailLabel = new JLabel();  
+		emailLabel.setText("E-mail");      //set label value for textField8  
+
+		//create text field to get email from the user  
+		textField8 = new JPasswordField(15);    //set length for the password
+
+		//create submit button  
+		button1 = new JButton("Register"); //set label to button  
+
+		//create panel to put form elements  
+		newPanel = new JPanel(new GridLayout(8, 1));  
+		newPanel.add(customerIdLabel);    //set customerId label to panel  
+		newPanel.add(textField1);   //set text field to panel
+		newPanel.add(customerNameLabel);    //set customerName label to panel  
+		newPanel.add(textField2);   //set text field to panel
+		newPanel.add(accountNoLabel);    //set accountNo label to panel  
+		newPanel.add(textField3);   //set text field to panel
+		newPanel.add(customerPasswordLabel);    //set customerPassword label to panel  
+		newPanel.add(textField4);   //set text field to panel
+		newPanel.add(balanceLabel);    //set balance label to panel  
+		newPanel.add(textField5);   //set text field to panel
+		newPanel.add(bankNameLabel);    //set password label to panel  
+		newPanel.add(textField6);   //set text field to panel
+		newPanel.add(ifscCodeLabel);    //set password label to panel  
+		newPanel.add(textField7);   //set text field to panel
+		newPanel.add(emailLabel);    //set password label to panel  
+		newPanel.add(textField8);   //set text field to panel
+		newPanel.add(button1);           //set button to panel  
+
+		//set border to panel   
+		add(newPanel, BorderLayout.CENTER);  
+
+		//perform action on button click   
+		button1.addActionListener(this);     //add action listener to button  
+		setTitle("REGISTER FORM");         //set title to the Register form  
+	}  
+
+	//define abstract method actionPerformed() which will be called on button click   
+	public void actionPerformed(ActionEvent ae)     //pass action listener as a parameter  
+	{  
+		BankingApplication ba = new BankingApplication();
+		ba.setCustomerId(textField1.getText());        //get user entered CustomerId from the textField1  
+		ba.setCustomerName(textField2.getText());        //get user entered CustomerName from the textField2  
+		ba.setAccountNo(Integer.parseInt(textField3.getText())); //get user entered AccountNo from the textField3
+		ba.setCustomerPassword(textField4.getText()); //get user entered AccountNo from the textField4
+		ba.setBalance(Integer.parseInt(textField5.getText())); //get user entered AccountNo from the textField4
+		//check whether the credentials are authentic or not  
+		if (userValue.equals("test1@gmail.com") && passValue.equals("test")) {  //if authentic, navigate user to a new page  
+
+			//create instance of the NewPage  
+			NewPage page = new NewPage();  
+
+			//make page visible to the user  
+			page.setVisible(true);  
+
+			//create a welcome label and set it to the new page  
+			JLabel wel_label = new JLabel("Welcome: "+userValue);  
+			page.getContentPane().add(wel_label);  
+		}  
+		else{  
+			//show error message  
+			System.out.println("Please enter valid username and password");  
+		}  
+	}  
+}  
+//create the main class  
+class LoginFormDemo  
+{  
+	//main() method start  
+	public static void main(String arg[])  
+	{  
+		try  
+		{  
+			//create instance of the CreateLoginForm  
+			RegisterJFrame form = new RegisterJFrame();  
+			form.setSize(300,100);  //set size of the frame  
+			form.setVisible(true);  //make form visible to the user  
+		}  
+		catch(Exception e)  
+		{     
+			//handle exception   
+			JOptionPane.showMessageDialog(null, e.getMessage());  
+		}  
+	}  
+}
+

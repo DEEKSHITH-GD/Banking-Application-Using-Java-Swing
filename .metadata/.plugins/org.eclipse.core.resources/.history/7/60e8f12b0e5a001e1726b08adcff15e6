@@ -1,0 +1,40 @@
+package com.destination.BankingApplication;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class Transfer {
+	public boolean validate() {
+		// TODO Auto-generated method stub
+		try {
+			//check sufficient balance
+			PreparedStatement pstmt = Connector.Connector().prepareStatement("Select balance from customers where customerId=? and balance>?");
+			pstmt.setString(1, BankingApplication.getCustomerId()); 
+			pstmt.setInt(2, BankingApplication.getTransferAmount());
+
+			ResultSet resultSet = pstmt.executeQuery();
+			if(resultSet.next()==true) {
+				pstmt = Connector.Connector().prepareStatement("Update customers set balance=? where accountNo=? and ifscCode=?"); //update recipient A/C
+				pstmt.setInt(1, BankingApplication.getRecipientBalance()+BankingApplication.getTransferAmount()); //add current balance & transfer amount to update db
+				pstmt.setInt(2, BankingApplication.getRecipientAccountNo());
+				pstmt.setString(3, BankingApplication.getRecipientIfscCode());
+
+				resultSet = pstmt.executeQuery();
+				if(resultSet.next()==true) {
+					pstmt = Connector.Connector().prepareStatement("Update customers set balance=? where customerId=?");
+					pstmt.setInt(1, BankingApplication.getBalance()-BankingApplication.getTransferAmount()); //add current balance & transfer amount to update db
+					pstmt.setString(2, BankingApplication.getCustomerId());
+
+					resultSet = pstmt.executeQuery();
+					if(resultSet.next()==true) {
+						return true;
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+}

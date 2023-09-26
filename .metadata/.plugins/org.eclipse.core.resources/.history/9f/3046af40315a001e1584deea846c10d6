@@ -1,0 +1,7 @@
+package com.destination.BankingApplication;
+
+public class RecordStatements {
+	public static void statements() {
+		
+	}
+}

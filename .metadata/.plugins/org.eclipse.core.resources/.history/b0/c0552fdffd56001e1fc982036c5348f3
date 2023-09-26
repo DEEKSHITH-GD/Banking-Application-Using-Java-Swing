@@ -1,0 +1,5 @@
+package com.destination.BankingAppFrames;
+
+public class AdminLoginFailed {
+
+}

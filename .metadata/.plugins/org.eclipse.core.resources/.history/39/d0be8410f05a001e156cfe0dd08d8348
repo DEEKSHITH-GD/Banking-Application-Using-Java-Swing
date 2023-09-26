@@ -1,0 +1,18 @@
+package com.destination.BankingApplication;
+
+import java.sql.PreparedStatement;
+
+public class RecordStatements {
+	public static void statements() {
+		try {
+		PreparedStatement pstmt = Connector.Connector().prepareStatement("insert into statements value(?,?,current_timestamp(),?)");
+		pstmt.setInt(1, BankingApplication.getAccountNo());
+		pstmt.setInt(2, BankingApplication.getRecipientAccountNo());
+		pstmt.setInt(3, BankingApplication.getTransferAmount());
+		pstmt.executeQuery();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

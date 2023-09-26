@@ -1,0 +1,16 @@
+package com.destination.BankingAppFrames;
+
+import javax.swing.JFrame;
+
+public class RegistrationFailed extends JFrame  
+{ 
+
+	//constructor  
+	RegistrationFailed()  
+	{  
+		setDefaultCloseOperation(javax.swing.  
+				WindowConstants.DISPOSE_ON_CLOSE);  
+		setTitle("Registration Failed");  
+		setSize(600, 200);  
+	}  
+}  

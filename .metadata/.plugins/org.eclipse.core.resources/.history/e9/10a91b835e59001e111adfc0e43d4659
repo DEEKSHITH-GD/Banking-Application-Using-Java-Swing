@@ -1,0 +1,92 @@
+package com.destination.BankingAppFrames;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.destination.BankingApplication.BankingApplication;
+import com.destination.BankingApplication.UserLogin;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class UserLoginJFrame extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField1;
+	private JTextField textField2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserLoginJFrame frame = new UserLoginJFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public UserLoginJFrame() {
+		setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		setTitle("CUSTOMER LOGIN FORM");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 255);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel CustomerIdLabel = new JLabel("Customer ID");
+		CustomerIdLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		CustomerIdLabel.setBounds(94, 51, 89, 27);
+		contentPane.add(CustomerIdLabel);
+		
+		textField1 = new JTextField(20);
+		textField1.setBounds(181, 52, 145, 27);
+		contentPane.add(textField1);
+		textField1.setColumns(10);
+		
+		JLabel CustomerPasswordLabel = new JLabel("Password");
+		CustomerPasswordLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		CustomerPasswordLabel.setBounds(94, 92, 89, 27);
+		contentPane.add(CustomerPasswordLabel);
+		
+		textField2 = new JTextField(10);
+		textField2.setColumns(10);
+		textField2.setBounds(181, 93, 145, 27);
+		contentPane.add(textField2);
+		
+		JButton btnNewButton = new JButton("Login");
+		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BankingApplication.setCustomerId(textField1.getText());        //get user entered CustomerId from the textField1 
+				BankingApplication.setCustomerPassword(textField2.getText()); //get user entered CustomerPassword from the textField2
+				UserLogin ul = new UserLogin();
+				boolean bul = ul.validate();
+				if(bul==true) {
+					UserLoginSuccessJFrame frame = new UserLoginSuccessJFrame();
+					frame.setVisible(true);
+				}
+			}
+		});
+		btnNewButton.setBounds(155, 148, 117, 33);
+		contentPane.add(btnNewButton);
+	}
+}

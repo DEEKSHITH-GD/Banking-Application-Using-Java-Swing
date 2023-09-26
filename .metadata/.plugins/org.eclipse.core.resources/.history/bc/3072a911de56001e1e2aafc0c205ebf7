@@ -1,0 +1,8 @@
+package com.destination.BankingApplication;
+
+public class Register {
+	public boolean register() {
+		System.out.println();
+		return false;
+	}
+}

@@ -1,0 +1,112 @@
+package com.destination.BankingAppFrames;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.destination.BankingApplication.BankingApplication;
+import com.destination.BankingApplication.Connector;
+import com.destination.BankingApplication.RecordStatements;
+import com.destination.BankingApplication.Transfer;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+
+public class TransferMoneyJframe extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField1;
+	private JTextField textField2;
+	private JTextField textField3;
+	/**
+	 * Create the frame.
+	 */
+	public TransferMoneyJframe() {
+		setTitle("TRANSFER MONEY");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //to close current window
+		setBounds(100, 100, 450, 270);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel AmountLabel = new JLabel("Transfer Amount : ");
+		AmountLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		AmountLabel.setBounds(54, 51, 111, 26);
+		contentPane.add(AmountLabel);
+		
+		textField1 = new JTextField();
+		textField1.setBounds(200, 52, 126, 26);
+		contentPane.add(textField1);
+		textField1.setColumns(10);
+		
+		JLabel RecepientLabel = new JLabel("Recipient Account No :");
+		RecepientLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		RecepientLabel.setBounds(54, 88, 136, 26);
+		contentPane.add(RecepientLabel);
+		
+		textField2 = new JTextField();
+		textField2.setColumns(10);
+		textField2.setBounds(200, 88, 126, 26);
+		contentPane.add(textField2);
+		
+		JLabel RecepientIFSCLabel = new JLabel("Recipient IFSC Code :");
+		RecepientIFSCLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		RecepientIFSCLabel.setBounds(54, 125, 136, 26);
+		contentPane.add(RecepientIFSCLabel);
+		
+		textField3 = new JTextField();
+		textField3.setColumns(10);
+		textField3.setBounds(200, 125, 126, 26);
+		contentPane.add(textField3);
+		
+		JButton SubmitButton = new JButton("Submit");
+		SubmitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BankingApplication.setTransferAmount(Integer.parseInt(textField1.getText()));
+				BankingApplication.setRecipientAccountNo(Integer.parseInt(textField2.getText()));
+				BankingApplication.setRecipientIfscCode(textField3.getText());
+				try {
+					PreparedStatement pst = Connector.Connector().prepareStatement("Select balance from customers where accountNo=? and status=\"active\"");
+					pst.setString(1, textField2.getText());
+					System.out.println(textField2.getText());
+					ResultSet rs = pst.executeQuery();
+					if(rs.next()==true) {
+						BankingApplication.setRecipientBalance(rs.getInt(1));
+						System.out.println(BankingApplication.getRecipientBalance());
+						Transfer t = new Transfer();
+						byte bt = t.validate();
+						if(bt==1) {
+							JOptionPane.showMessageDialog(SubmitButton, "Transaction Successfull: "+BankingApplication.getTransferAmount()+" is transferred to "+BankingApplication.getRecipientAccountNo());
+							RecordStatements.statements();
+						}
+						else if(bt==2){
+							JOptionPane.showMessageDialog(SubmitButton, "Transaction Failed: Incorrect Recipient IFSC code");
+						}else {
+							JOptionPane.showMessageDialog(SubmitButton, "Transaction Failed: Insufficient balance");
+						}
+					}else {
+						JOptionPane.showMessageDialog(SubmitButton, "Transaction Failed: Incorrect Recipient Account Number or Account is inactive!");
+					}
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		SubmitButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		SubmitButton.setBounds(152, 178, 126, 34);
+		contentPane.add(SubmitButton);
+	}
+}

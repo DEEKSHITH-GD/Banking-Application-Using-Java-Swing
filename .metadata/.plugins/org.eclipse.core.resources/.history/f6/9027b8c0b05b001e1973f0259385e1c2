@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.destination</groupId>
+  <artifactId>BankingApplication</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+	<build>
+				<!-- this goes within <build> -->
+		<plugins>
+			<plugin>
+				<!-- Build an executable JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<!-- here we specify that we want to use the main method within the App class -->
+							<mainClass>com.destination.BankingApplication.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+		<!-- other properties -->
+
+	</build>
+    <dependencies>
+			<!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common -->
+					<dependency>
+					    <groupId>com.jgoodies</groupId>
+					    <artifactId>jgoodies-common</artifactId>
+					    <version>1.8.0</version>
+					</dependency>
+					
+					
+						<!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms -->
+					<dependency>
+					    <groupId>com.jgoodies</groupId>
+					    <artifactId>jgoodies-forms</artifactId>
+					    <version>1.8.0</version>
+					</dependency>
+						
+						<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+				 <dependency>
+				    <groupId>org.testng</groupId>
+				    <artifactId>testng</artifactId>
+				    <version>7.8.0</version>
+				    <scope>test</scope>
+				 </dependency>
+				 
+				 
+		
+	</dependencies>
+</project>

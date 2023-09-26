@@ -1,0 +1,84 @@
+package com.destination.BankingAppFrames;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.destination.BankingApplication.BankingApplication;
+import com.destination.BankingApplication.GetCustomerName;
+import com.destination.BankingApplication.UserLogin;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+
+public class UserLoginJFrame extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField1;
+	public JButton LoginButton;
+	private JPasswordField textfield2;
+	/**
+	 * Create the frame.
+	 */
+	public UserLoginJFrame() {
+		setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		setTitle("CUSTOMER LOGIN FORM");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //to close user login window frame
+		setBounds(100, 100, 450, 255);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel CustomerIdLabel = new JLabel("Customer ID");
+		CustomerIdLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		CustomerIdLabel.setBounds(94, 51, 89, 27);
+		contentPane.add(CustomerIdLabel);
+		
+		textField1 = new JTextField(20);
+		textField1.setBounds(181, 52, 145, 27);
+		contentPane.add(textField1);
+		textField1.setColumns(10);
+		
+		JLabel CustomerPasswordLabel = new JLabel("Password");
+		CustomerPasswordLabel.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		CustomerPasswordLabel.setBounds(94, 92, 89, 27);
+		contentPane.add(CustomerPasswordLabel);
+		
+		LoginButton = new JButton("Login");
+		LoginButton.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		LoginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BankingApplication.setCustomerId(textField1.getText());        //get user entered CustomerId from the textField1 
+				BankingApplication.setCustomerPassword(textfield2.getText()); //get user entered CustomerPassword from the textField2
+				UserLogin ul = new UserLogin();
+				byte bul = ul.validate();
+				if(bul==1) {
+					GetCustomerName.getCustomerName();
+					JOptionPane.showMessageDialog(LoginButton, "Login Successfull for: "+BankingApplication.getCustomerName());
+					BankJframe BJframe = new BankJframe();
+					BJframe.setVisible(true);
+				}
+				else if(bul==2) {
+					JOptionPane.showMessageDialog(LoginButton, "Login Failed: Customer ID - "+BankingApplication.getCustomerId()+" is not yet activated");
+				}
+				else {
+					JOptionPane.showMessageDialog(LoginButton, "Login Failed: Invalid Credentials");
+				}
+			}
+		});
+		LoginButton.setBounds(155, 148, 117, 33);
+		contentPane.add(LoginButton);
+		
+		textfield2 = new JPasswordField();
+		textfield2.setBounds(181, 93, 145, 27);
+		contentPane.add(textfield2);
+	}
+}

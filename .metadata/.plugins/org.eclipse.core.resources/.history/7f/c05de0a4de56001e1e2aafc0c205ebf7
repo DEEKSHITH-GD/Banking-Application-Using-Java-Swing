@@ -1,0 +1,16 @@
+package com.destination.BankingApplication;
+
+
+public class BankingApplication {
+	static String customerId; 		
+	static String customerName;		
+	static int accountNo;	
+	static String customerPassword; 		
+	static int balance;		
+	static String bankName;		
+	static String ifscCode;		
+	static String email;
+
+	
+	
+}
